@@ -2,11 +2,6 @@ package com.be.payload.response;
 
 import java.util.List;
 
-/**
- * Created by: Phạm Tiến
- * Date: 29/03/2023
- * Class: JwtResponse
- */
 public class JwtResponse {
 
     private String token;
