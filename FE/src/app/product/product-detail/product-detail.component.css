@@ -1,0 +1,236 @@
+.product-details {
+  margin-top: 50px;
+}
+
+.product-info h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.product-description {
+  margin-bottom: 20px;
+}
+
+.product-specs ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.product-specs li {
+  margin-bottom: 5px;
+}
+
+.product-specs li span {
+  font-weight: bold;
+}
+
+.product-reviews ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.product-reviews li {
+  margin-bottom: 10px;
+}
+
+.product-reviews li span {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.product-reviews li .stars {
+  color: #f6b93b;
+  font-size: 20px;
+}
+
+.product-add-to-cart h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.product-add-to-cart button {
+  background-color: #ee4d2d;
+}
+/*}*/
+/*.product-detail {*/
+/*  display: flex;*/
+/*  flex-wrap: wrap;*/
+/*}*/
+
+/*.product-image {*/
+/*  flex-basis: 50%;*/
+/*  position: relative;*/
+/*  overflow: hidden;*/
+/*}*/
+
+/*.product-image img {*/
+/*  width: 100%;*/
+/*  transition: transform 0.2s ease-in-out;*/
+/*}*/
+
+/*.product-image:hover img {*/
+/*  transform: scale(1.1);*/
+/*}*/
+
+/*.image-overlay {*/
+/*  position: absolute;*/
+/*  bottom: 0;*/
+/*  left: 0;*/
+/*  right: 0;*/
+/*  display: inline-block;*/
+/*  padding: 5px 10px;*/
+/*  background-color: #fff;*/
+/*  color: #333;*/
+/*  text-decoration: none;*/
+/*  border: 2px solid #333;*/
+/*  border-radius: 4px;*/
+/*  font-size: 14px;*/
+/*  margin: 10px;*/
+/*  transition: all 0.2s ease-in-out;*/
+/*}*/
+
+/*.image-overlay a:hover {*/
+/*  background-color: #333;*/
+/*  color: #fff;*/
+/*}*/
+
+/*.product-info {*/
+/*  flex-basis: 50%;*/
+/*  padding: 20px;*/
+/*}*/
+
+/*.product-name {*/
+/*  font-size: 28px;*/
+/*  margin: 0;*/
+/*}*/
+
+/*.product-rating {*/
+/*  display: flex;*/
+/*  align-items: center;*/
+/*  margin: 10px 0;*/
+/*}*/
+
+/*.product-rating .fa {*/
+/*  font-size: 16px;*/
+/*}*/
+
+/*.product-rating a {*/
+/*  font-size: 14px;*/
+/*  color: #666;*/
+/*  text-decoration: none;*/
+/*  margin-left: 5px;*/
+/*}*/
+
+/*.product-rating a:hover {*/
+/*  text-decoration: underline;*/
+/*}*/
+
+/*.product-price {*/
+/*  font-size: 24px;*/
+/*  color: #e91e63;*/
+/*  margin: 10px 0;*/
+/*}*/
+
+/*.product-description {*/
+/*  font-size: 16px;*/
+/*  color: #333;*/
+/*  line-height: 1.5;*/
+/*  margin: 10px 0;*/
+/*}*/
+
+/*.product-options {*/
+/*  display: flex;*/
+/*  align-items: center;*/
+/*  margin-bottom: 20px;*/
+/*}*/
+
+/*.product-options label {*/
+/*  font-size: 16px;*/
+/*  margin-right: 10px;*/
+/*}*/
+
+/*.product-options select {*/
+/*  font-size: 16px;*/
+/*  padding: 5px;*/
+/*  border-radius: 4px;*/
+/*  border: 1px solid #ccc;*/
+/*  margin-right: 20px;*/
+/*}*/
+
+/*.product-action {*/
+/*  display: flex;*/
+/*  align-items: center;*/
+/*}*/
+
+/*.add-to-cart,*/
+/*.buy-now {*/
+/*  padding: 10px 20px;*/
+/*  border-radius: 4px;*/
+/*  border: none;*/
+/*  font-size: 16px;*/
+/*  color: #fff;*/
+/*  margin-right: 10px;*/
+/*  cursor: pointer;*/
+/*  transition: all 0.2s ease-in-out;*/
+/*}*/
+
+/*.add-to-cart {*/
+/*  background-color: #333;*/
+/*}*/
+
+/*.add-to-cart:hover {*/
+/*  background-color: #666;*/
+/*}*/
+
+/*.buy-now {*/
+/*  background-color: #e91e63;*/
+/*}*/
+
+/*.buy-now:hover {*/
+/*  background-color: #ff4081;*/
+/*}*/
+
+/*.product-related {*/
+/*  width: 100%;*/
+/*  margin-top: 50px;*/
+/*  padding: 20px;*/
+/*  background-color: #f7f7f7;*/
+/*}*/
+
+/*.product-related h3 {*/
+/*  font-size: 24px;*/
+/*  margin-top: 0;*/
+/*  margin-bottom: 20px;*/
+/*}*/
+
+/*.related-products {*/
+/*  display: flex;*/
+/*  flex-wrap: wrap;*/
+/*}*/
+
+/*.related-products a {*/
+/*  flex-basis: 25%;*/
+/*  display: block;*/
+/*  margin-right: 20px;*/
+/*  margin-bottom: 20px;*/
+/*  text-align: center;*/
+/*  text-decoration: none;*/
+/*}*/
+
+/*.related-products a:last-child {*/
+/*  margin-right: 0;*/
+/*}*/
+
+/*.related-products img {*/
+/*  width: 100%;*/
+/*  border-radius: 4px;*/
+/*  margin-bottom: 10px;*/
+/*}*/
+
+/*.related-products h4 {*/
+/*  font-size: 16px;*/
+/*  margin: 0;*/
+/*  color: #333;*/
+/*}*/

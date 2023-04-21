@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Giỏ hàng</title>
+  <!-- CSS Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <!-- jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!-- JavaScript Bootstrap -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style type="text/css">
+    body{
+      background-color: #f2f2f2;
+    }
+    .container{
+      background-color: #fff;
+      margin-top: 50px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    .cart-header{
+      background-color: #f7f7f7;
+      border-bottom: 1px solid #ddd;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+    .cart-header h2{
+      font-weight: bold;
+      font-size: 24px;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+    .cart-item{
+      border: 1px solid #ddd;
+      margin-bottom: 10px;
+      padding: 10px;
+    }
+    .cart-item img{
+      max-height: 100px;
+      margin-right: 20px;
+    }
+    .cart-item h4{
+      font-weight: bold;
+      font-size: 18px;
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+    .cart-item p{
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+    .cart-item input{
+      width: 50px;
+      margin-right: 5px;
+    }
+    .cart-item .btn{
+      margin-top: 5px;
+    }
+    .cart-total{
+      background-color: #f7f7f7;
+      border-top: 1px solid #ddd;
+      padding: 10px;
+      margin-top: 20px;
+    }
+    .cart-total h3{
+      font-weight: bold;
+      font-size: 18px;
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+    .cart-total p{
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+    .cart-buttons{
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+    .cart-buttons .btn{
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="cart-header">
+    <h2>Giỏ hàng của bạn</h2>
+  </div>
+  <div class="cart-item">
+    <div class="row">
+      <div class="col-md-3 col-sm-4 col-xs-12">
+        <img src="https://via.placeholder.com/150x150" alt="Product Image">
+      </div>
+      <div class="col-md-9 col-sm-8 col-xs-12">
+        <h4>Tên sản phẩm</h4>
+        <p>Mô tả sản phẩm</p>
+        <div class="form-group">
+          <label for="quantity">Số lượng:</label>
+          <input type="number" class="form-control" id="quantity" value="1">
+        </div>
+        <div class="form-group">
+          <label for="size">Kích cỡ:</label>
+          <select class="form-control" id="size">
+            <option>Size S</option>
+            <option>Size M</option>
+            <option>Size L</option>
+            <option>Size XL</option>
+          </select>
+        </div>
+        <p><strong>Giá:</strong> 100.000đ</p>
+        <button class="btn btn-danger">Xóa</button>
+      </div>
+    </div>
+  </div>
+  <div class="cart-item">
+    <div class="row">
+      <div class="col-md-3 col-sm-4 col-xs-12">
+        <img src="https://via.placeholder.com/150x150" alt="Product Image">
+      </div>
+      <div class="col-md-9 col-sm-8 col-xs-12">
+        <h4>Tên sản phẩm</h4>
+        <p>Mô tả sản phẩm</p>
+        <div class="form-group">
+          <label for="quantity">Số lượng:</label>
+          <input type="number" class="form-control" id="quantity" value="1">
+        </div>
+        <div class="form-group">
+          <label for="size">Kích cỡ:</label>
+          <select class="form-control" id="size">
+            <option>Size S</option>
+            <option>Size M</option>
+            <option>Size L</option>
+            <option>Size XL</option>
+          </select>
+        </div>
+        <p><strong>Giá:</strong> 200.000đ</p>
+        <button class="btn btn-danger">Xóa</button>
+      </div>
+    </div>
+  </div>
+  <div class="cart-total">
+    <h3>Tổng tiền</h3>
+    <p><strong>Tạm tính:</strong> 300.000đ</p>
+    <p><strong>Phí vận chuyển:</strong> 20.000đ</p>
+    <p><strong>Thành tiền:</strong> 320.000đ</p>
+  </div>
+  <div class="cart-buttons">
+    <button class="btn btn-primary">Tiếp tục mua hàng</button>
+    <button class="btn btn-danger">Xóa toàn bộ giỏ hàng</button>
+    <button class="btn btn-success">Thanh toán</button>
+  </div>
+</div>
+
+</body>
+</html>
