@@ -10,6 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 public interface IUserRepository  extends JpaRepository<AppUser,Long> {
-    @Query(value = "select a.* from  app_user where email= :email", nativeQuery = true)
+    @Query(value = "select * from  app_user where email= :email", nativeQuery = true)
     AppUser findUserByEmail(@Param("email") String email);
 }
