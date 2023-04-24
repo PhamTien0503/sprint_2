@@ -1,9 +1,5 @@
 package com.be.payload.request;
-/**
- * Created by: Phạm Tiến
- * Date: 29/03/2023
- * Class: LoginRequest
- */
+
 public class LoginRequest {
 
     private String username;

@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {LoginService} from '../../security-authentication/service/login.service';
-import {Router} from '@angular/router';
+import {FormControl, FormGroup} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ShareService} from '../../../service/share.service';
+import {TokenStorageService} from '../../../service/token-storage.service';
+import {LoginService} from '../../../service/login.service';
 import Swal from 'sweetalert2';
-import {TokenStorageService} from '../../security-authentication/service/token-storage.service';
-import {ShareService} from '../../security-authentication/service/share.service';
 
 @Component({
   selector: 'app-login',
@@ -12,56 +12,40 @@ import {ShareService} from '../../security-authentication/service/share.service'
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
-  loginForm: FormGroup;
-  username: string;
-  // errorMessage = '';
+  formLogin: FormGroup;
+  username = String;
   roles: string[] = [];
   returnUrl: string;
+  rememberMe: boolean;
 
-  constructor(private loginService: LoginService,
+  constructor(private tokenStorageService: TokenStorageService,
+              private authService: LoginService,
               private router: Router,
-              private tokenStorageService: TokenStorageService,
+              private route: ActivatedRoute,
               private shareService: ShareService) {
   }
 
   ngOnInit(): void {
-    debugger
-    if (this.loginService.isLoggedIn) {
-      Swal.fire({
-        text: 'Bạn đã đăng nhập.',
-        icon: 'warning',
-        showConfirmButton: false,
-        timer: 1500
-      });
-      this.router.navigateByUrl('/');
-    }
-    this.view();
-    this.loginForm = new FormGroup({
-      username: new FormControl('', [Validators.email, Validators.required]),
-      password: new FormControl('', [Validators.required]),
-      rememberMe: new FormControl()
+    this.formLogin = new FormGroup({
+      username: new FormControl(),
+      password: new FormControl(),
+      rememberMe: new FormControl(false)
+
     });
+
     if (this.tokenStorageService.getToken()) {
       const user = this.tokenStorageService.getUser();
-      this.loginService.isLoggedIn = true;
+      this.authService.isLoggedIn = true;
       this.roles = this.tokenStorageService.getUser().roles;
       this.username = this.tokenStorageService.getUser().username;
     }
-  }
-
-
-  view(): void {
-    const element = document.getElementById('login');
-    if (element) {
-      element.scrollIntoView();
-    }
+    // this.returnUrl = this.route.snapshot.queryParams[' returnUrl'] || '/login';
   }
 
   onSubmit() {
-    this.loginService.login(this.loginForm.value).subscribe(
+    this.authService.login(this.formLogin.value).subscribe(
       data => {
-        if (this.loginForm.value.rememberMe) {
+        if (this.formLogin.value.rememberMe) {
           this.tokenStorageService.saveTokenLocal(data.accessToken);
           this.tokenStorageService.saveUserLocal(data);
         } else {
@@ -69,26 +53,30 @@ export class LoginComponent implements OnInit {
           this.tokenStorageService.saveUserLocal(data);
         }
 
-        this.loginService.isLoggedIn = true;
+        this.authService.isLoggedIn = true;
         this.username = this.tokenStorageService.getUser().username;
         this.roles = this.tokenStorageService.getUser().roles;
-        this.loginForm.reset();
-        Swal.fire({
-          text: 'Đăng nhập thành công',
-          icon: 'success',
-          showConfirmButton: false,
-          timer: 1500
-        });
-        this.router.navigateByUrl('');
+        this.formLogin.reset();
+        this.router.navigateByUrl(this.returnUrl);
         this.shareService.sendClickEvent();
+
       },
       err => {
-        // this.errorMessage = err.error.message;
-        this.loginService.isLoggedIn = false;
-        Swal.fire({
-          text: 'Tài khoản, mật khẩu không đúng hoặc chưa được kích hoạt!',
+        this.authService.isLoggedIn = false;
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer);
+            toast.addEventListener('mouseleave', Swal.resumeTimer);
+          }
+        });
+        Toast.fire({
           icon: 'error',
-          confirmButtonText: 'OK'
+          title: 'Tên đăng nhập hoặc mật khẩu không đúng'
         });
       }
     );

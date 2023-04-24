@@ -7,7 +7,6 @@ const USER_KEY = 'auth-user';
   providedIn: 'root'
 })
 export class TokenStorageService {
-
   constructor() {
   }
 
@@ -53,15 +52,6 @@ export class TokenStorageService {
       return JSON.parse(localStorage.getItem(USER_KEY));
     } else {
       return JSON.parse(sessionStorage.getItem(USER_KEY));
-    }
-  }
-
-  getRole() {
-    const user = this.getUser();
-    if (user.roles) {
-      return user.roles[0];
-    } else {
-      return null;
     }
   }
 }
