@@ -1,5 +1,7 @@
 package com.be.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -25,13 +27,35 @@ public class AppUser {
 
     @Column(length = 100, nullable = false, unique = true)
     private String address;
+    @Column(columnDefinition = "text")
+    private String img;
 
     private boolean gender;
-    private boolean isDeleted;
+    private boolean flagDelete;
     @OneToMany(mappedBy = "user")
+    @JsonBackReference
     private Set<UserRole> userRoleSet;
+    @OneToMany(mappedBy = "appUser")
+    @JsonBackReference
+    private Set<Orders>orderSet;
 
     public AppUser() {
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public Set<Orders> getOrderSet() {
+        return orderSet;
+    }
+
+    public void setOrderSet(Set<Orders> orderSet) {
+        this.orderSet = orderSet;
     }
 
     public String getEmail() {
@@ -114,11 +138,11 @@ public class AppUser {
         this.gender = gender;
     }
 
-    public boolean isDeleted() {
-        return isDeleted;
+    public boolean isFlagDelete() {
+        return flagDelete;
     }
 
-    public void setDeleted(boolean deleted) {
-        isDeleted = deleted;
+    public void setFlagDelete(boolean flagDelete) {
+        this.flagDelete = flagDelete;
     }
 }

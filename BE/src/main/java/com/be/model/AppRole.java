@@ -1,5 +1,7 @@
 package com.be.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -10,8 +12,17 @@ public class AppRole {
     private Integer id;
     private String name;
     @OneToMany(mappedBy = "role")
+    @JsonBackReference
     private Set<UserRole> userRoleSet;
     public AppRole() {
+    }
+
+    public Set<UserRole> getUserRoleSet() {
+        return userRoleSet;
+    }
+
+    public void setUserRoleSet(Set<UserRole> userRoleSet) {
+        this.userRoleSet = userRoleSet;
     }
 
     public Integer getId() {
