@@ -1,6 +1,5 @@
 package com.be.controller;
 
-import com.be.model.Brands;
 import com.be.model.Product;
 import com.be.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;

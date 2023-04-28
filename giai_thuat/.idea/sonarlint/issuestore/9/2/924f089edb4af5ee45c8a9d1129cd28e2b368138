@@ -1,4 +1,13 @@
 
-0
-java:S1220""Move this file to a named package.
-S	java:S106"9Replace this use of System.out or System.err by a logger.(‚ŞÏ¥ıÿÿÿÿ
+7
+java:S1220""Move this file to a named package.8¢üâµü0
+p
+java:S2095"NUse try-with-resources or close this "FileOutputStream" in a "finally" clause.(Œíö‘şÿÿÿÿ8»üâµü0
+m
+java:S2095"PUse try-with-resources or close this "ObjectOutputStream" in a "finally" clause.(«Şó°8¼üâµü0
+P
+java:S1128".Remove this unused import 'java.util.Scanner'.(ÒÜÅ¸úÿÿÿÿ8Õüâµü0
+E
+java:S1068"(Remove this unused "name" private field.(Ë¥¼8Öüâµü0
+M
+java:S1068"+Remove this unused "address" private field.(÷§ùÿÿÿÿ8×üâµü0
