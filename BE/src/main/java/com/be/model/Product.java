@@ -24,7 +24,7 @@ public class Product {
     private Boolean flagDelete=false;
     @ManyToOne
     @JoinColumn(name = "brands_id",referencedColumnName = "id")
-    private Brands brands;
+    private Brand brands;
     @ManyToOne
     @JoinColumn(name = "product_type_id", referencedColumnName = "id")
     private ProductType productType;
@@ -107,11 +107,11 @@ public class Product {
         this.flagDelete = flagDelete;
     }
 
-    public Brands getBrands() {
+    public Brand getBrands() {
         return brands;
     }
 
-    public void setBrands(Brands brands) {
+    public void setBrands(Brand brands) {
         this.brands = brands;
     }
 

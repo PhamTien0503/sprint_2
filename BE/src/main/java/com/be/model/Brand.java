@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-public class Brands {
+public class Brand {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -16,7 +16,7 @@ public class Brands {
     @JsonBackReference
     private Set<Product> productSet;
 
-    public Brands() {
+    public Brand() {
     }
 
     public Integer getId() {
