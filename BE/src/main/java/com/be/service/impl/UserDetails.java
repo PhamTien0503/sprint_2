@@ -18,13 +18,17 @@ public class UserDetails implements org.springframework.security.core.userdetail
 
 
     private String password;
+    private String nameUser;
+    private Long idUser;
     private List<GrantedAuthority> authorities = null;
 
-    public UserDetails(String username, String password,
+    public UserDetails(String username, String password,String nameUser, Long idUser,
                        List<GrantedAuthority> authorities) {
         this.email = username;
         this.password = password;
         this.authorities = authorities;
+        this.nameUser=nameUser;
+        this.idUser=idUser;
     }
 
     public static UserDetails build(AppUser appUser) {
@@ -34,6 +38,8 @@ public class UserDetails implements org.springframework.security.core.userdetail
         return new UserDetails(
                 appUser.getEmail(),
                 appUser.getPassword(),
+                appUser.getName(),
+                appUser.getId(),
                 authorities);
     }
 
@@ -81,5 +87,37 @@ public class UserDetails implements org.springframework.security.core.userdetail
             return false;
         UserDetails account = (UserDetails) o;
         return Objects.equals(email, account.email);
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getNameUser() {
+        return nameUser;
+    }
+
+    public void setNameUser(String nameUser) {
+        this.nameUser = nameUser;
+    }
+
+    public Long getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(Long idUser) {
+        this.idUser = idUser;
+    }
+
+    public void setAuthorities(List<GrantedAuthority> authorities) {
+        this.authorities = authorities;
     }
 }

@@ -17,6 +17,8 @@ export class LoginComponent implements OnInit {
   roles: string[] = [];
   returnUrl: string;
   rememberMe: boolean;
+  name?: string;
+  idUser?: number;
 
   constructor(private tokenStorageService: TokenStorageService,
               private authService: LoginService,
@@ -38,6 +40,8 @@ export class LoginComponent implements OnInit {
       this.authService.isLoggedIn = true;
       this.roles = this.tokenStorageService.getUser().roles;
       this.username = this.tokenStorageService.getUser().username;
+      this.name = this.tokenStorageService.getUser().nameUser;
+      console.log('asdfsad' + this.name);
     }
     // this.returnUrl = this.route.snapshot.queryParams[' returnUrl'] || '/login';
   }
@@ -45,12 +49,15 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.authService.login(this.formLogin.value).subscribe(
       data => {
+        console.log(data);
         if (this.formLogin.value.rememberMe) {
           this.tokenStorageService.saveTokenLocal(data.accessToken);
           this.tokenStorageService.saveUserLocal(data);
         } else {
           this.tokenStorageService.saveTokenSession(data.accessToken);
           this.tokenStorageService.saveUserLocal(data);
+          this.name = data.nameUser;
+          this.idUser = data.idUser;
         }
 
         this.authService.isLoggedIn = true;
@@ -58,7 +65,7 @@ export class LoginComponent implements OnInit {
         this.roles = this.tokenStorageService.getUser().roles;
         this.formLogin.reset();
         this.router.navigateByUrl(this.returnUrl);
-        this.shareService.sendClickEvent();
+        this.shareService.sendClickEvent(pr);
 
       },
       err => {

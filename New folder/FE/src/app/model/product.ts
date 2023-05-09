@@ -2,12 +2,10 @@ export interface Product {
   id?: number;
   name?: string;
   price?: number;
+  img?: string;
   productQuantity?: number;
+  description?: string;
   // private String releaseDate;
-  // private String description;
-  //
-  // @Column(columnDefinition = "text")
-  // private String img;
   // @Column(columnDefinition = "bit(1)")
   // private Boolean flagDelete=false;
   // @ManyToOne

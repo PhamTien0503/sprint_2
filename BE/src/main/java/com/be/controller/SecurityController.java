@@ -47,6 +47,8 @@ public class SecurityController {
                 new JwtResponse(
                         jwt,
                         userDetails.getUsername(),
+                        userDetails.getNameUser(),
+                        userDetails.getIdUser(),
                         roles)
         );
     }

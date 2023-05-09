@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 import {Router} from '@angular/router';
 import Swal from 'sweetalert2';
@@ -17,6 +17,7 @@ export class NavbarComponent implements OnInit {
   nameEmployee: string;
   role: string;
   isLoggedIn = false;
+  idUser: number;
 
   constructor(private tokenStorageService: TokenStorageService,
               private shareService: ShareService,
@@ -28,6 +29,8 @@ export class NavbarComponent implements OnInit {
       this.currentUser = this.tokenStorageService.getUser().username;
       this.role = this.tokenStorageService.getUser().roles[0];
       this.username = this.tokenStorageService.getUser().username;
+      this.currentUser = this.tokenStorageService.getUser().nameUser;
+      this.idUser = this.tokenStorageService.getUser().idUser;
     }
     this.isLoggedIn = this.username != null;
     this.getUsernameAccount();

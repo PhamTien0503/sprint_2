@@ -14,7 +14,6 @@ public class BeApplication {
         System.out.println(b);
         boolean c = BCrypt.checkpw(a,b);
         System.out.println(c);
-
     }
 }
 

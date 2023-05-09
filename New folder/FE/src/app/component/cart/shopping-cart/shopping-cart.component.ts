@@ -1,5 +1,7 @@
 import {Component, OnInit, AfterContentInit} from '@angular/core';
 import {render} from 'creditcardpayments/creditCardPayments';
+import {ShareProductCartService} from '../../../service/share-product-cart.service';
+import {Product} from '../../../model/product';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -7,7 +9,13 @@ import {render} from 'creditcardpayments/creditCardPayments';
   styleUrls: ['./shopping-cart.component.css']
 })
 export class ShoppingCartComponent implements OnInit, AfterContentInit {
-  constructor() {
+  productList: Product[];
+
+  constructor(private shareProductCartService: ShareProductCartService) {
+    this.shareProductCartService.cartItems.subscribe(next => {
+      this.productList = next;
+      console.log(this.productList);
+    });
   }
 
   ngOnInit(): void {
@@ -15,7 +23,6 @@ export class ShoppingCartComponent implements OnInit, AfterContentInit {
   }
 
   ngAfterContentInit(): void {
-
     render(
       {
         id: '#payments',

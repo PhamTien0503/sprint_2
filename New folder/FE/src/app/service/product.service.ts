@@ -3,6 +3,8 @@ import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {Product} from '../model/product';
 
+const URL = 'http://localhost:8080/api/product/';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,8 +13,13 @@ export class ProductService {
   constructor(private httpClient: HttpClient) {
   }
 
-  getProduct(nameProduct: string): Observable<Page<Product>> {
-    return this.httpClient.get<Page<Product>>('http://localhost:8080/api/product/list?nameProduct=' + nameProduct);
+  getProduct(nameProduct: string, brandId: number, productTypeId: number, size: number): Observable<Page<Product>> {
+    return this.httpClient.get<Page<Product>>(URL + 'list?nameProduct=' + nameProduct + '&brandId=' +
+      brandId + '&productTypeId=' + productTypeId + '&size=' + size);
+  }
+
+  findProductDetail(id: number): Observable<Product> {
+    return this.httpClient.get<Product>(URL + 'detail/' + id);
   }
 }
 

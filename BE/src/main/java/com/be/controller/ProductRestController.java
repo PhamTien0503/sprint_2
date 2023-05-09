@@ -4,6 +4,7 @@ import com.be.model.Product;
 import com.be.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -17,16 +18,26 @@ import org.springframework.web.bind.annotation.*;
 public class ProductRestController {
     @Autowired
     private IProductService productService;
+
     @GetMapping("/list")
-    public ResponseEntity<Page<Product>> getAllProduct(@RequestParam (defaultValue = "",required = false)String nameProduct,
-                                                       @RequestParam (defaultValue = "0", required = false)Integer brandId,
-                                                       @RequestParam(defaultValue = "0",required = false) Integer productTypeId,
-                                                       @PageableDefault(page = 0, size = 5,sort = "release_date", direction = Sort.Direction.ASC) Pageable pageable){
-        Page<Product>products=productService.getAllProduct(nameProduct,brandId,productTypeId,pageable);
-        if (products.isEmpty()){
+    public ResponseEntity<Page<Product>> getAllProduct(@RequestParam(defaultValue = "", required = false) String nameProduct,
+                                                       @RequestParam(defaultValue = "0", required = false) Integer brandId,
+                                                       @RequestParam(defaultValue = "0", required = false) Integer productTypeId,
+                                                       @RequestParam(defaultValue = "0", required = false) Integer page,
+                                                       @RequestParam(defaultValue = "2", required = false) Integer size) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "release_date");
+        Pageable pageable = PageRequest.of(page, size, sort);
+        Page<Product> products = productService.getAllProduct(nameProduct, brandId, productTypeId, pageable);
+        if (products.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(products,HttpStatus.OK);
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
+
+    @GetMapping("/detail/{id}")
+    public ResponseEntity<Product> getProduct(@PathVariable Long id) {
+        Product product = productService.findProductById(id);
+        return new ResponseEntity<>(product, HttpStatus.OK);
     }
 }
 
