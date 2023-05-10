@@ -36,8 +36,13 @@ INSERT INTO `sprint2`.`product` (`description`, `flag_delete`, `img`, `name`, `p
 INSERT INTO `sprint2`.`product` (`description`, `flag_delete`, `img`, `name`, `price`, `product_quantity`, `release_date`, `brands_id`, `product_type_id`) VALUES ('hihi', 0, 'https://cuongquoc.com.vn/media/news/0604_gach-lat-nen-dep-2019-hanh-lang-2.png', 'Gạch đẹp', '25000', '23', '2021-02-02', '1', '1');
 INSERT INTO `sprint2`.`product` (`description`, `flag_delete`, `img`, `name`, `price`, `product_quantity`, `release_date`, `brands_id`, `product_type_id`) VALUES ('hihi', 0, 'https://cuongquoc.com.vn/media/news/0604_gach-lat-nen-dep-2019-hanh-lang-2.png', 'Gạch tuyệt vời', '25000', '23', '2021-02-02', '1', '2');
 
-INSERT INTO `sprint2`.`orders` (`id`, `date_purchase`, `id_paid`, `app_user_id`) VALUES ('1', '2023-01-01', 1, '1');
+INSERT INTO `sprint2`.`orders` (`id`, `date_purchase`, `is_paid`, `app_user_id`) VALUES ('1', '2023-01-01', 1, '1');
+INSERT INTO `sprint2`.`orders` ( `date_purchase`, `is_paid`, `app_user_id`) VALUES ( '2023-01-02', 0, '1');
 
-INSERT INTO `sprint2`.`order_detail` (`id`, `order_quantity`, `order_id`, `product_id`) VALUES ('1', '23', '1', '1');
+INSERT INTO `sprint2`.`order_detail` (`id`, `order_quantity`, `order_id`, `product_id`,choose) VALUES ('1', '23', '1', '1',0);
+INSERT INTO `sprint2`.`order_detail` ( `order_quantity`, `order_id`, `product_id`,choose) VALUES ( '23', '2', '1',0);
+INSERT INTO `sprint2`.`order_detail` (`order_quantity`, `order_id`, `product_id`,choose) VALUES ( '1', '2', '3',0);
+INSERT INTO `sprint2`.`order_detail` ( `order_quantity`, `order_id`, `product_id`,choose) VALUES ( '12', '2' ,'2',0);
 
 INSERT INTO `sprint2`.`user_role` (`user_role_id`, `role_id`, `user_id`) VALUES ('1', '1', '1');
+INSERT INTO `sprint2`.`user_role` (`user_role_id`, `role_id`, `user_id`) VALUES ('2', '2', '2');

@@ -65,7 +65,7 @@ export class LoginComponent implements OnInit {
         this.roles = this.tokenStorageService.getUser().roles;
         this.formLogin.reset();
         this.router.navigateByUrl(this.returnUrl);
-        this.shareService.sendClickEvent(pr);
+        this.shareService.sendClickEvent();
 
       },
       err => {

@@ -1,0 +1,54 @@
+<!-- Shoping Cart -->
+<div class="bg0 p-t-75 p-b-85" style="margin-top: 50px">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+        <div class="m-l-25 m-r--38 m-lr-0-xl">
+          <div class="wrap-table-shopping-cart">
+            <table class="table-shopping-cart">
+              <tr class="table_head">
+                <th class="column-1">Sản phẩm</th>
+                <th class="column-2"></th>
+                <th class="column-3">Giá</th>
+                <th class="column-4">Số lượng</th>
+                <th class="column-5">Tổng cộng</th>
+                <th class="column-7">Xóa</th>
+              </tr>
+              <tr class="table_row" *ngFor="let od of orderDetailList,index as i">
+                <td class="column-1">
+                  <div class="how-itemcart1">
+                    <img src="{{od?.product?.img}}" alt="IMG">
+                  </div>
+                </td>
+                <td class="column-2">{{od?.product?.name}}</td>
+                <td class="column-3">đ {{od?.product?.price}}</td>
+                <td class="column-4">
+                    <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product1" value="1">
+                </td>
+                <td class="column-5">{{priceDetails[i]}}</td>
+                <td>
+                  <button class="btn btn-outline-danger">Xóa</button>
+                </td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
+            <div class="flex-w flex-m m-r-20 m-tb-5">
+              <input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" name="coupon"
+                     placeholder="Coupon Code">
+
+              <div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
+                Apply coupon
+              </div>
+            </div>
+
+            <div class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
+              Update Cart
+            </div>
+          </div>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>

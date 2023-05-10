@@ -7,5 +7,6 @@ import java.util.List;
 
 
 public interface IOrderService {
-    List<Orders> findOrderByUserId(Long idUser);
+    Orders findOrderByUserId(Long idUser);
+    Orders findOrderById(Long idOrder);
 }

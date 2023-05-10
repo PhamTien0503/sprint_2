@@ -8,6 +8,7 @@ public class OrderDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Integer orderQuantity;
+    private boolean choose;
     @ManyToOne
     @JoinColumn(name = "order_id",referencedColumnName = "id")
     private Orders order;
@@ -16,6 +17,14 @@ public class OrderDetail {
     private Product product;
 
     public OrderDetail() {
+    }
+
+    public boolean isChoose() {
+        return choose;
+    }
+
+    public void setChoose(boolean choose) {
+        this.choose = choose;
     }
 
     public Orders getOrder() {

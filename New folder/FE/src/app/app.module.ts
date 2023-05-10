@@ -13,6 +13,7 @@ import { ShoppingCartComponent } from './component/cart/shopping-cart/shopping-c
 import { LoginComponent } from './component/login/login/login.component';
 import {RouterModule} from '@angular/router';
 import { AuthInterceptor } from './component/security/auth.interceptor';
+import { HistoryComponent } from './component/history/history.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AuthInterceptor } from './component/security/auth.interceptor';
     ContentComponent,
     ProductDetailComponent,
     ShoppingCartComponent,
-    LoginComponent
+    LoginComponent,
+    HistoryComponent
   ],
   imports: [
     BrowserModule,

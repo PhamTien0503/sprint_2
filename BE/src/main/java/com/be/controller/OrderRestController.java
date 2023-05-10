@@ -15,9 +15,9 @@ import java.util.List;
 public class OrderRestController {
     @Autowired
     private IOrderService orderService;
-    @GetMapping("/list/{idUser}")
-    public ResponseEntity<List<Orders>> getOrderByUserId (@PathVariable Long idUser){
-        List<Orders>ordersList=orderService.findOrderByUserId(idUser);
-        return new ResponseEntity<>(ordersList, HttpStatus.OK);
+    @GetMapping("/get/{idUser}")
+    public ResponseEntity<Orders> getOrderByUserId (@PathVariable Long idUser){
+        Orders order =orderService.findOrderByUserId(idUser);
+        return new ResponseEntity<>(order, HttpStatus.OK);
     }
 }

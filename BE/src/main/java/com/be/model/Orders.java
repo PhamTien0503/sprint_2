@@ -11,7 +11,7 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String datePurchase;
-    private Boolean id_paid;
+    private Boolean isPaid;
     @ManyToOne
     @JoinColumn(name = "app_user_id",referencedColumnName = "id")
     private AppUser appUser;
@@ -48,12 +48,12 @@ public class Orders {
         this.datePurchase = datePurchase;
     }
 
-    public Boolean getId_paid() {
-        return id_paid;
+    public Boolean getIsPaid() {
+        return isPaid;
     }
 
-    public void setId_paid(Boolean id_paid) {
-        this.id_paid = id_paid;
+    public void setIsPaid(Boolean isPaid) {
+        this.isPaid = isPaid;
     }
 
     public AppUser getAppUser() {

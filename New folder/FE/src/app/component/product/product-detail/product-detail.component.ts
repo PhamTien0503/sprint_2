@@ -1,9 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {Product} from '../../../model/product';
-import {ShareProductService} from '../../../service/share-product.service';
 import {ActivatedRoute, ParamMap} from '@angular/router';
 import {ProductService} from '../../../service/product.service';
-import {ShareProductCartService} from '../../../service/share-product-cart.service';
+import {OrderService} from '../../../service/order.service';
+import {TokenStorageService} from '../../../service/token-storage.service';
+import {Order} from '../../../model/order';
+import {OrderDetail} from '../../../model/order-detail';
+import {CartService} from '../../../service/cart.service';
+import {OrderDetailDto} from '../../../model/order-detail-dto';
+import Swal from 'sweetalert2';
+import {log} from 'util';
 
 @Component({
   selector: 'app-product-detail',
@@ -14,21 +20,35 @@ export class ProductDetailComponent implements OnInit {
   productDetail?: Product;
   idProduct?: number;
   img?: string;
+  idUser?: number;
+  order?: Order;
+  orderDetailDto: OrderDetailDto = {};
+  orderDetail?: OrderDetail;
 
-  constructor(private shareProductService: ShareProductService,
-              private activatedRoute: ActivatedRoute,
-              private productService: ProductService,
-              private shareProductCartService: ShareProductCartService) {
-    this.shareProductService.getClickEvent().subscribe(next => {
-    });
+
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private productService: ProductService,
+    private orderService: OrderService,
+    private tokenStorageService: TokenStorageService,
+    private cartService: CartService) {
   }
 
   ngOnInit(): void {
     this.view();
+    this.orderDetailDto.orderQuantity = 1;
     this.activatedRoute.paramMap.subscribe((paramap: ParamMap) => {
       this.idProduct = parseInt(paramap.get('id'), 10);
+      this.idUser = this.tokenStorageService.getUser().idUser;
+      this.orderService.getOrder(this.idUser).subscribe(order => {
+        this.orderDetailDto.orderId = order.id;
+        this.cartService.getOrderDetailByOrderAndProduct(order.id, this.idProduct).subscribe(orderDetail => {
+          this.orderDetail = orderDetail;
+        });
+      });
       this.productService.findProductDetail(this.idProduct).subscribe(next => {
         this.productDetail = next;
+        this.orderDetailDto.productId = next.id;
       });
     });
   }
@@ -36,8 +56,127 @@ export class ProductDetailComponent implements OnInit {
   view(): void {
     window.scrollTo(0, 0);
   }
+  addToCart(value: string) {
+    this.orderDetailDto.orderQuantity = parseInt(value, 10);
+    let quantity = parseInt(value, 10);
+    console.log( (this.orderDetail));
+    if (this.orderDetail !== null) {
+      quantity += this.orderDetail.orderQuantity;
+      console.log(quantity);
+      console.log(this.productDetail.productQuantity);
+    }
+    if (quantity > this.productDetail.productQuantity) {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer);
+          toast.addEventListener('mouseleave', Swal.resumeTimer);
+        }
+      });
+      Toast.fire({
+        icon: 'error',
+        title: 'Bạn đã chọn vượt quá số lượng trong kho. Vui lòng chọn lại'
+      });
+    } else {
+      this.cartService.createCart(this.orderDetailDto).subscribe(next => {
+        this.ngOnInit();
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer);
+            toast.addEventListener('mouseleave', Swal.resumeTimer);
+          }
+        });
+        Toast.fire({
+          icon: 'success',
+          title: 'Thêm vào giỏ hàng thành công'
+        });
+      });
+    }
+  }
 
-  addToCart() {
-    this.shareProductCartService.addToCart(this.productDetail);
+  minus() {
+    if (this.orderDetailDto.orderQuantity > 1) {
+      this.orderDetailDto.orderQuantity -= 1;
+    }
+  }
+
+  plus(value: string) {
+    let quantity = parseInt(value, 10);
+    quantity += 1;
+    this.orderDetailDto.orderQuantity += 1;
+    if (this.orderDetail.orderQuantity !== null) {
+      quantity += this.orderDetail.orderQuantity;
+      if (quantity > this.productDetail.productQuantity) {
+        this.orderDetailDto.orderQuantity -= 1;
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer);
+            toast.addEventListener('mouseleave', Swal.resumeTimer);
+          }
+        });
+        Toast.fire({
+          icon: 'error',
+          title: 'Bạn đã chọn vượt quá số lượng trong kho. Vui lòng nhập lại'
+        });
+      }
+    }
+  }
+
+  checkQuantity(value: string) {
+    let quantity = +value;
+    if (quantity < 1 || !Number.isInteger(quantity)) {
+      this.orderDetailDto.orderQuantity = 1;
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer);
+          toast.addEventListener('mouseleave', Swal.resumeTimer);
+        }
+      });
+      Toast.fire({
+        icon: 'error',
+        title: 'Vui lòng nhập số nguyên dương'
+      });
+    } else {
+      if (this.orderDetail.orderQuantity !== null) {
+        quantity += this.orderDetail.orderQuantity;
+        if (quantity > this.productDetail.productQuantity) {
+          this.orderDetailDto.orderQuantity = 1;
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer);
+              toast.addEventListener('mouseleave', Swal.resumeTimer);
+            }
+          });
+          Toast.fire({
+            icon: 'error',
+            title: 'Bạn đã chọn vượt quá số lượng trong kho. Vui lòng nhập lại'
+          });
+        }
+      }
+    }
   }
 }

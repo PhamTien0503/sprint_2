@@ -6,7 +6,6 @@ import {ProductType} from '../../../model/product-type';
 import {BrandService} from '../../../service/brand.service';
 import {ProductTypeService} from '../../../service/product-type.service';
 import {ShareService} from '../../../service/share.service';
-import {ShareProductService} from '../../../service/share-product.service';
 
 @Component({
   selector: 'app-content',
@@ -26,8 +25,7 @@ export class ContentComponent implements OnInit {
   constructor(private productService: ProductService,
               private brandService: BrandService,
               private productTypeService: ProductTypeService,
-              private shareService: ShareService,
-              private shareProductService: ShareProductService) {
+              private shareService: ShareService) {
   }
 
   ngOnInit(): void {
@@ -58,9 +56,5 @@ export class ContentComponent implements OnInit {
   loadMore() {
     this.size += 4;
     this.getAllProduct(this.nameProduct, this.brandId, this.productTypeId, this.size);
-  }
-
-  sendProduct(pr: Product) {
-    this.shareProductService.sendClickEvent(pr);
   }
 }

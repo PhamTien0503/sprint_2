@@ -48,15 +48,15 @@
       <div class="col-md-6 col-lg-5 p-b-30">
         <div class="p-r-50 p-t-5 p-lr-0-lg">
           <h4 class="mtext-105 cl2 js-name-detail p-b-14">
-            {{productDetail.name}}
+            {{productDetail?.name}}
           </h4>
 
           <span class="mtext-106 cl2">
-							{{productDetail.price}}
+							{{productDetail?.price}}
 						</span>
 
           <p class="stext-102 cl3 p-t-23">
-            {{productDetail.description}}
+            {{productDetail?.description}}
           </p>
 
           <!--  -->
@@ -102,19 +102,20 @@
             <div class="flex-w flex-r-m p-b-10">
               <div class="size-204 flex-w flex-m respon6-next">
                 <div class="wrap-num-product flex-w m-r-20 m-tb-10">
-                  <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+                  <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m"(click)="minus()">
                     <i class="fs-16 zmdi zmdi-minus"></i>
                   </div>
-
-                  <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value="1">
-
-                  <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+                    <input class="mtext-104 cl3 txt-center num-product" type="number" name="quantity"
+                           [(ngModel)]="orderDetailDto.orderQuantity" #quantity (change)="checkQuantity(quantity.value)">
+                  <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m" (click)="plus(quantity.value)">
                     <i class="fs-16 zmdi zmdi-plus"></i>
                   </div>
                 </div>
-
-                <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail" (click)="addToCart()">
-                  Add to cart
+                <p class="stext-102 cl3 m-lg-0">
+                  (Có sẵn {{productDetail?.productQuantity}} sản phẩm)
+                </p>
+                <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail"
+                        (click)="addToCart(quantity.value)">Add to cart
                 </button>
               </div>
             </div>
