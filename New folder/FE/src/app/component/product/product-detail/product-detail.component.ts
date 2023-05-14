@@ -10,6 +10,7 @@ import {CartService} from '../../../service/cart.service';
 import {OrderDetailDto} from '../../../model/order-detail-dto';
 import Swal from 'sweetalert2';
 import {log} from 'util';
+import {ShareService} from '../../../service/share.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -31,7 +32,8 @@ export class ProductDetailComponent implements OnInit {
     private productService: ProductService,
     private orderService: OrderService,
     private tokenStorageService: TokenStorageService,
-    private cartService: CartService) {
+    private cartService: CartService,
+    private shareService: ShareService) {
   }
 
   ngOnInit(): void {
@@ -56,21 +58,19 @@ export class ProductDetailComponent implements OnInit {
   view(): void {
     window.scrollTo(0, 0);
   }
+
   addToCart(value: string) {
     this.orderDetailDto.orderQuantity = parseInt(value, 10);
     let quantity = parseInt(value, 10);
-    console.log( (this.orderDetail));
     if (this.orderDetail !== null) {
       quantity += this.orderDetail.orderQuantity;
-      console.log(quantity);
-      console.log(this.productDetail.productQuantity);
     }
     if (quantity > this.productDetail.productQuantity) {
       const Toast = Swal.mixin({
         toast: true,
         position: 'top-end',
         showConfirmButton: false,
-        timer: 3000,
+        timer: 1500,
         timerProgressBar: true,
         didOpen: (toast) => {
           toast.addEventListener('mouseenter', Swal.stopTimer);
@@ -83,12 +83,12 @@ export class ProductDetailComponent implements OnInit {
       });
     } else {
       this.cartService.createCart(this.orderDetailDto).subscribe(next => {
-        this.ngOnInit();
+        this.shareService.sendClickEvent();
         const Toast = Swal.mixin({
           toast: true,
           position: 'top-end',
           showConfirmButton: false,
-          timer: 3000,
+          timer: 1500,
           timerProgressBar: true,
           didOpen: (toast) => {
             toast.addEventListener('mouseenter', Swal.stopTimer);
@@ -97,7 +97,7 @@ export class ProductDetailComponent implements OnInit {
         });
         Toast.fire({
           icon: 'success',
-          title: 'Thêm vào giỏ hàng thành công'
+          title: 'Bạn đã thêm sản phẩm vào giỏ hàng'
         });
       });
     }
@@ -113,7 +113,7 @@ export class ProductDetailComponent implements OnInit {
     let quantity = parseInt(value, 10);
     quantity += 1;
     this.orderDetailDto.orderQuantity += 1;
-    if (this.orderDetail.orderQuantity !== null) {
+    if (this.orderDetail !== null) {
       quantity += this.orderDetail.orderQuantity;
       if (quantity > this.productDetail.productQuantity) {
         this.orderDetailDto.orderQuantity -= 1;
@@ -133,6 +133,27 @@ export class ProductDetailComponent implements OnInit {
           title: 'Bạn đã chọn vượt quá số lượng trong kho. Vui lòng nhập lại'
         });
       }
+    }
+    {
+      if (quantity > this.productDetail.productQuantity) {
+        this.orderDetailDto.orderQuantity = 1;
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer);
+            toast.addEventListener('mouseleave', Swal.resumeTimer);
+          }
+        });
+        Toast.fire({
+          icon: 'error',
+          title: 'Bạn đã chọn vượt quá số lượng trong kho. Vui lòng nhập lại'
+        });
+      }
+
     }
   }
 
@@ -156,7 +177,7 @@ export class ProductDetailComponent implements OnInit {
         title: 'Vui lòng nhập số nguyên dương'
       });
     } else {
-      if (this.orderDetail.orderQuantity !== null) {
+      if (this.orderDetail !== null) {
         quantity += this.orderDetail.orderQuantity;
         if (quantity > this.productDetail.productQuantity) {
           this.orderDetailDto.orderQuantity = 1;
@@ -176,6 +197,26 @@ export class ProductDetailComponent implements OnInit {
             title: 'Bạn đã chọn vượt quá số lượng trong kho. Vui lòng nhập lại'
           });
         }
+      } else {
+        if (quantity > this.productDetail.productQuantity) {
+          this.orderDetailDto.orderQuantity = 1;
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer);
+              toast.addEventListener('mouseleave', Swal.resumeTimer);
+            }
+          });
+          Toast.fire({
+            icon: 'error',
+            title: 'Bạn đã chọn vượt quá số lượng trong kho. Vui lòng nhập lại'
+          });
+        }
+
       }
     }
   }

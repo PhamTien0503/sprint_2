@@ -16,6 +16,7 @@ public class Product {
     private Integer productQuantity;
     @Column(columnDefinition = "date")
     private String releaseDate;
+    @Column(columnDefinition = "text")
     private String description;
 
     @Column(columnDefinition = "text")

@@ -1,8 +1,8 @@
 import {AppUser} from './app-user';
 
-export interface Order {
+export interface OrderDto {
   id?: number;
-  datePurchase: Date;
+  datePurchase?: Date;
   isPaid?: boolean;
-  appUser?: AppUser;
+  idUser?: number;
 }

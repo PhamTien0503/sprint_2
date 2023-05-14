@@ -40,4 +40,14 @@ public class OrderService implements IOrderService {
     public Orders findOrderById(Long idOrder) {
         return orderRepository.findById(idOrder).get();
     }
+
+    @Override
+    public void createOrder(Orders orders) {
+         orderRepository.save(orders);
+    }
+
+    @Override
+    public void updateOrder(Orders orders) {
+        this.orderRepository.save(orders);
+    }
 }

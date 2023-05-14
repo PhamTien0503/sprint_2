@@ -18,11 +18,11 @@ export class UserGuard implements CanActivate {
       if (this.token.getUser().roles[0] === 'ROLE_USER' || this.token.getUser().roles[0] === 'ROLE_ADMIN' && this.token.isLogger()) {
         return true;
       } else {
-        this.router.navigateByUrl('error-page/error');
+        this.router.navigateByUrl('/error');
         return false;
       }
     } else {
-      this.router.navigateByUrl('error-page/error');
+      this.router.navigateByUrl('/error');
       return false;
     }
   }

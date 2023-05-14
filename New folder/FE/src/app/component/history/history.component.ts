@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Order} from '../../model/order';
 import {OrderDetail} from '../../model/order-detail';
 import {OrderService} from '../../service/order.service';
@@ -14,28 +14,35 @@ export class HistoryComponent implements OnInit {
   idUser?: number;
   order?: Order;
   orderDetailList?: OrderDetail [];
-  priceTotal: number;
   priceDetails = [];
-  priceTransfer = 0;
   total: number;
+  page = 0;
+  size = 5;
 
   constructor(private orderService: OrderService,
               private activatedRoute: ActivatedRoute,
-              private cartService: CartService) { }
+              private cartService: CartService) {
+  }
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe((paramap: ParamMap) => {
       this.idUser = parseInt(paramap.get('idUser'), 10);
-      this.orderService.getOrder(this.idUser).subscribe(next => {
-        this.order = next;
-        this.cartService.getOrderDetailByOrder(next.id).subscribe(orderDetails => {
-          this.orderDetailList = orderDetails;
-          for (const it of orderDetails) {
-            this.priceDetails.push(it.product.price * it.orderQuantity);
-          }
-        });
+      this.cartService.getHistory(this.idUser, this.size).subscribe(next => {
+        this.orderDetailList = next.content;
+        for (const it of this.orderDetailList) {
+          this.priceDetails.push(it.product.price * it.orderQuantity);
+        }
       });
     });
   }
 
+  loadMore() {
+    this.size += 5;
+    this.cartService.getHistory(this.idUser, this.size).subscribe(next => {
+      this.orderDetailList = next.content;
+      for (const it of this.orderDetailList) {
+        this.priceDetails.push(it.product.price * it.orderQuantity);
+      }
+    });
+  }
 }

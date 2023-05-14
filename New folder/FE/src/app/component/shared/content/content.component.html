@@ -155,15 +155,15 @@
         <input type="text" class="form-control" placeholder="Nhập tên gạch" aria-label="Username" #nameProduct>
       </div>
       <div class="m-1 col-md-2">
-        <button type="button" class="btn btn-outline-info"
-                (click)="show(nameProduct.value,brandId.value, productTypeId.value)">Search
+        <button type="button" class="btn btn-outline-dark"
+                (click)="show(nameProduct.value,brandId.value, productTypeId.value)">TÌM KIẾM
         </button>
       </div>
     </div>
 
     <div class="flex-w">
       <div class="flex-w flex-l-m filter-tope-group m-tb-10"></div>
-      <div class="row isotope-grid"  *ngIf="products">
+      <div class="row isotope-grid" *ngIf="products">
         <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women" *ngFor="let pr of products">
 
           <!-- Block2 -->
@@ -175,7 +175,7 @@
               <div class="block2-btns flex-w">
                 <a routerLink="product/detail/{{pr.id}}"
                    class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                  Quick View
+                  CHI TIẾT
                 </a>
               </div>
             </div>
@@ -184,19 +184,18 @@
                 <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
                   {{pr.name}}
                 </a>
-                <span class="stext-105 cl3">{{pr.price}}</span>
+                <span class="stext-105 cl3">{{pr.price}}đ/m2</span>
               </div>
             </div>
           </div>
         </div>
-
-
       </div>
     </div>
     <!-- Load more -->
     <div class="flex-c-m flex-w w-full p-t-45">
-      <a class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04" (click)="loadMore()">
-        Load More
+      <a class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04" (click)="loadMore()"
+         [hidden]="totalElement==products.length">
+        XEM THÊM
       </a>
     </div>
   </div>

@@ -9,28 +9,23 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link" href="#">Trang chủ</a>
+          <a class="nav-link" routerLink="">Trang chủ</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Gạch ốp tường</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Gạch lát nền</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/history/{{idUser}}">Lịch sử</a>
+          <a class="nav-link" [hidden]="!isLoggedIn" routerLink="/history/{{idUser}}">Lịch sử</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Liên hệ</a>
         </li>
         <li class="nav-item" style="margin-left: 15px">
-          <a type="button" style="color: white" href="">
-            <i class="fa fa-search fa-lg" aria-hidden="true"></i>
-          </a>
-        </li>
-        <li class="nav-item" style="margin-left: 15px">
-          <a type="button" style="color: white" routerLink="product/cart/{{idUser}}">
-            <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
+          <a type="button" class="position-relative" style="color: white" routerLink="product/cart/{{idUser}}">
+            <i class="fa fa-shopping-cart fa-lg" aria-hidden="true">
+            </i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill "
+                  style="background-color: red" [hidden]="!isLoggedIn">
+     {{accountOrderDetail}}
+         <span class="visually-hidden">unread messages</span>
+    </span>
           </a>
         </li>
         <li [hidden]="isLoggedIn" class="nav-item" style="margin-left: 15px">

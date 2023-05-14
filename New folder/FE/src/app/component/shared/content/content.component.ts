@@ -21,6 +21,7 @@ export class ContentComponent implements OnInit {
   nameProduct = '';
   brandId = 0;
   productTypeId = 0;
+  totalElement?: number;
 
   constructor(private productService: ProductService,
               private brandService: BrandService,
@@ -46,11 +47,16 @@ export class ContentComponent implements OnInit {
   getAllProduct(nameProduct: string, brandId: number, productTypeId: number, size: number) {
     this.productService.getProduct(nameProduct, brandId, productTypeId, size).subscribe(next => {
       this.products = next.content;
+      this.totalElement = next.totalElements;
+
     });
   }
 
   show(nameProduct: string, brandId: string, productTypeId: string) {
-    this.getAllProduct(nameProduct, parseInt(brandId, 10), parseInt(productTypeId, 10), this.size);
+    this.nameProduct = nameProduct;
+    this.brandId = parseInt(brandId, 10);
+    this.productTypeId = parseInt(productTypeId, 10);
+    this.getAllProduct(this.nameProduct, this.brandId, this.productTypeId, this.size);
   }
 
   loadMore() {

@@ -4,6 +4,8 @@ import com.be.model.OrderDetail;
 import com.be.repository.IOrderDetailRepository;
 import com.be.service.IOrderDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,5 +46,15 @@ public class OrderDetailService implements IOrderDetailService {
     @Override
     public OrderDetail findOrderDetailById(Long id) {
         return orderDetailRepository.findById(id).get();
+    }
+
+    @Override
+    public Page<OrderDetail> findHistory(Long idUser, Pageable pageable) {
+        return orderDetailRepository.findHistory(idUser,pageable);
+    }
+
+    @Override
+    public void deleteOrderDetail(OrderDetail orderDetail) {
+        orderDetailRepository.delete(orderDetail);
     }
 }

@@ -1,5 +1,6 @@
 package com.be.controller;
 
+import com.be.dto.ProductDto;
 import com.be.model.Product;
 import com.be.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,18 @@ public class ProductRestController {
     public ResponseEntity<Product> getProduct(@PathVariable Long id) {
         Product product = productService.findProductById(id);
         return new ResponseEntity<>(product, HttpStatus.OK);
+    }
+
+    @PatchMapping("/update")
+    public ResponseEntity<ProductDto> updateQuantity(@RequestBody ProductDto productDto) {
+        try {
+            Product product = productService.findProductById(productDto.getId());
+            product.setProductQuantity(productDto.getProductQuantity());
+            productService.updateQuantity(product);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }
 

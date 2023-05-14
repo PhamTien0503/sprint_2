@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {Product} from '../model/product';
+import {ProductDto} from '../model/product-dto';
 
 const URL = 'http://localhost:8080/api/product/';
 
@@ -20,6 +21,10 @@ export class ProductService {
 
   findProductDetail(id: number): Observable<Product> {
     return this.httpClient.get<Product>(URL + 'detail/' + id);
+  }
+
+  updateProduct(product: ProductDto): Observable<ProductDto> {
+    return this.httpClient.patch<ProductDto>(URL + 'update/', product);
   }
 }
 

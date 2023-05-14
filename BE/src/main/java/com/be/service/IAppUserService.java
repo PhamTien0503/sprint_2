@@ -1,5 +1,7 @@
 package com.be.service;
 
-public interface IAppUserService {
+import com.be.model.AppUser;
 
+public interface IAppUserService {
+    AppUser findAppUserById(Long id);
 }

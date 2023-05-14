@@ -7,6 +7,10 @@ import {OrderDetail} from '../../../model/order-detail';
 import {CartService} from '../../../service/cart.service';
 import Swal from 'sweetalert2';
 import {OrderDetailDto} from '../../../model/order-detail-dto';
+import {OrderDto} from '../../../model/order-dto';
+import {ProductService} from '../../../service/product.service';
+import {ProductDto} from '../../../model/product-dto';
+import {ShareService} from '../../../service/share.service';
 
 
 @Component({
@@ -23,10 +27,14 @@ export class ShoppingCartComponent implements OnInit, AfterContentInit {
   priceTransfer = 0;
   total: number;
   value = 'none';
+  id?: number;
+  name?: string;
 
   constructor(private orderService: OrderService,
               private activatedRoute: ActivatedRoute,
-              private cartService: CartService) {
+              private cartService: CartService,
+              private productService: ProductService,
+              private shareService: ShareService) {
   }
 
   ngOnInit(): void {
@@ -48,16 +56,49 @@ export class ShoppingCartComponent implements OnInit, AfterContentInit {
   }
 
   ngAfterContentInit(): void {
+    document.querySelector('#payments').innerHTML = '';
     render(
       {
         id: '#payments',
-        currency: 'USD',
-        value: '100000',
+        currency: 'VND',
+        value: '100',
         onApprove: (details) => {
-          alert('thanh toán thành công');
+          alert('Thanh toán thành công');
         }
       }
     );
+  }
+
+  updatePayPalControl() {
+    if (this.total > 1) {
+      this.value = 'block';
+      document.getElementById('payments').style.display = this.value;
+      document.querySelector('#payments').innerHTML = '';
+      render({
+        id: '#payments',
+        currency: 'VND',
+        value: String((this.total / 22000).toFixed(2)),
+        onApprove: (details) => {
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer);
+              toast.addEventListener('mouseleave', Swal.resumeTimer);
+            }
+          });
+          Toast.fire({
+            icon: 'success',
+            title: 'Thanh toán thành công'
+          });
+          this.charge();
+          this.value = 'none';
+        }
+      });
+    }
   }
 
   view(): void {
@@ -188,8 +229,79 @@ export class ShoppingCartComponent implements OnInit, AfterContentInit {
     }
   }
 
-  showPayment() {
-    this.value = 'block';
-    document.getElementById('payments').style.display = this.value;
+  charge() {
+    this.orderService.getOrder(this.idUser).subscribe(next => {
+      this.order = next;
+      const order: OrderDto = {
+        id: this.order.id,
+      };
+      this.orderService.updateOrderById(order).subscribe(update => {
+        const order1: OrderDto = {
+          idUser: this.idUser,
+        };
+        this.orderService.createOrderByIdUser(order1).subscribe(create => {
+          this.orderService.getOrder(this.idUser).subscribe(get => {
+            this.order = get;
+            for (const od of this.orderDetailList) {
+              if (od.choose === true) {
+                const pr: ProductDto = {
+                  id: od.product.id,
+                  productQuantity: od.product.productQuantity - od.orderQuantity,
+                };
+                this.productService.updateProduct(pr).subscribe(up => {
+                });
+              } else {
+                const orderDetailNew: OrderDetailDto = {
+                  id: od.id,
+                  orderId: this.order.id,
+                };
+                this.cartService.updateOrderDetailToNewOrder(orderDetailNew).subscribe(upd => {
+                  this.shareService.sendClickEvent();
+                });
+              }
+              this.cartService.getOrderDetailByOrder(this.order.id).subscribe(orderDetails => {
+                this.orderDetailList = orderDetails;
+                for (const it of orderDetails) {
+                  this.priceDetails.push(it.product.price * it.orderQuantity);
+                }
+                this.getPrice();
+              });
+            }
+          });
+        });
+      });
+    });
+  }
+  deleteCartDetail() {
+    this.cartService.deleteOrderDetail(this.id).subscribe(next => {
+      this.cartService.getOrderDetailByOrder(this.order.id).subscribe(orderDetails => {
+        this.orderDetailList = orderDetails;
+        for (const it of orderDetails) {
+          this.priceDetails.push(it.product.price * it.orderQuantity);
+        }
+        this.getPrice();
+      });
+      this.shareService.sendClickEvent();
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer);
+          toast.addEventListener('mouseleave', Swal.resumeTimer);
+        }
+      });
+      Toast.fire({
+        icon: 'success',
+        title: 'Bạn đã xóa sản phẩm ra khỏi giỏ hàng thành công'
+      });
+    });
+  }
+
+  getInfoDelete(id: number, nameProduct: string) {
+    this.id = id;
+    this.name = nameProduct;
   }
 }

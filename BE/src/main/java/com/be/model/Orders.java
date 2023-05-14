@@ -3,6 +3,7 @@ package com.be.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Set;
 
 @Entity
@@ -10,7 +11,7 @@ public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String datePurchase;
+    private Timestamp datePurchase;
     private Boolean isPaid;
     @ManyToOne
     @JoinColumn(name = "app_user_id",referencedColumnName = "id")
@@ -40,12 +41,20 @@ public class Orders {
         this.id = id;
     }
 
-    public String getDatePurchase() {
+    public Timestamp getDatePurchase() {
         return datePurchase;
     }
 
-    public void setDatePurchase(String datePurchase) {
+    public void setDatePurchase(Timestamp datePurchase) {
         this.datePurchase = datePurchase;
+    }
+
+    public Boolean getPaid() {
+        return isPaid;
+    }
+
+    public void setPaid(Boolean paid) {
+        isPaid = paid;
     }
 
     public Boolean getIsPaid() {

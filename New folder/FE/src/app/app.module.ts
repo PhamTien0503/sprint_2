@@ -14,6 +14,9 @@ import { LoginComponent } from './component/login/login/login.component';
 import {RouterModule} from '@angular/router';
 import { AuthInterceptor } from './component/security/auth.interceptor';
 import { HistoryComponent } from './component/history/history.component';
+import { DateTimeFormatPipe } from './model/date-time-format.pipe';
+import { ErrorComponent } from './component/error/error.component';
+import {Http403Interceptor} from './component/security/http403.interceptor';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,9 @@ import { HistoryComponent } from './component/history/history.component';
     ProductDetailComponent,
     ShoppingCartComponent,
     LoginComponent,
-    HistoryComponent
+    HistoryComponent,
+    DateTimeFormatPipe,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +43,13 @@ import { HistoryComponent } from './component/history/history.component';
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-    }
+    },
+
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: Http403Interceptor,
+    //   multi: true
+    // }
   ],
   bootstrap: [AppComponent]
 })
